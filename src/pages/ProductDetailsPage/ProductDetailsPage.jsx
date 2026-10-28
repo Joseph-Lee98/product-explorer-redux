@@ -7,24 +7,24 @@ import {
   decreaseQuantity,
   addToBasket,
 } from "../../features/basket/basketSlice";
-import { useProducts } from "../../context/ProductsContext";
 import "./ProductDetailsPage.css";
-import { useEffect } from "react";
 
 export default function ProductDetailsPage() {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const numberId = Number(id);
-  const { products, setProducts, isLoading, errorMessage } = useProducts();
+  const products = useSelector((state) => state.products.products);
+  const isLoading = useSelector((state) => state.products.isLoading);
+  const errorMessage = useSelector((state) => state.products.errorMessage);
   const isProductPresent = products.some((product) => product.id === numberId);
   const indexInProducts = products.findIndex(
     (product) => product.id === numberId,
   );
   const product = products[indexInProducts];
   const basket = useSelector((state) => state.basket);
-  const dispatch = useDispatch();
   const isInBasket = basket.some((item) => item.id === numberId);
   const index = basket.findIndex((item) => item.id === numberId);
- 
+
   return (
     <main className="product-page">
       <h1 className="product-page-title">Explore this Product</h1>
@@ -112,7 +112,7 @@ export default function ProductDetailsPage() {
                   type="button"
                   className="product-details-basket-button"
                   onClick={() =>
-                    dispatch(addToBasket({...product,quantity:1}))
+                    dispatch(addToBasket({ ...product, quantity: 1 }))
                   }
                   disabled={product.stock === 0}
                 >

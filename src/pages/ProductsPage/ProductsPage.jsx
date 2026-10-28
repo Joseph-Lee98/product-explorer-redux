@@ -2,10 +2,12 @@ import react from "react";
 import { useState } from "react";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import "./ProductsPage.css";
-import { useProducts } from "../../context/ProductsContext";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ProductsPage() {
-  const { products, isLoading, errorMessage } = useProducts();
+  const products = useSelector((state) => state.products.products);
+  const isLoading = useSelector((state) => state.products.isLoading);
+  const errorMessage = useSelector((state) => state.products.errorMessage);
 
   return (
     <main className="products-page">
