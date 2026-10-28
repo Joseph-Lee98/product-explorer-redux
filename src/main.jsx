@@ -5,16 +5,17 @@ import App from "./App.jsx";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
-import { BasketProvider } from "./context/BasketContext.jsx";
 import { ProductsProvider } from "./context/ProductsContext.jsx";
+import { Provider } from "react-redux";
+import { store } from "./app/store.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ProductsProvider>
-        <BasketProvider>
+        <Provider store={store}>
           <App />
-        </BasketProvider>
+        </Provider>
       </ProductsProvider>
     </BrowserRouter>
   </StrictMode>,

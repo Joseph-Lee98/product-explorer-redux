@@ -1,7 +1,12 @@
 import react from "react";
 import { useParams } from "react-router";
 import { useState } from "react";
-import { useBasket } from "../../context/BasketContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  addToBasket,
+} from "../../features/basket/basketSlice";
 import { useProducts } from "../../context/ProductsContext";
 import "./ProductDetailsPage.css";
 import { useEffect } from "react";
@@ -15,42 +20,11 @@ export default function ProductDetailsPage() {
     (product) => product.id === numberId,
   );
   const product = products[indexInProducts];
-  const { basket, setBasket } = useBasket();
+  const basket = useSelector((state) => state.basket);
+  const dispatch = useDispatch();
   const isInBasket = basket.some((item) => item.id === numberId);
-  const addToBasketHandler = () => {
-    setBasket([
-      ...basket,
-      {
-        id: numberId,
-        quantity: 1,
-        title: product.title,
-        price: product.price,
-        thumbnail: product.thumbnail,
-      },
-    ]);
-  };
   const index = basket.findIndex((item) => item.id === numberId);
-  const increaseQuantityHandler = () => {
-    setBasket(
-      basket.map((item) => {
-        if (item.id === numberId)
-          return { ...item, quantity: item.quantity + 1 };
-        return item;
-      }),
-    );
-  };
-  const decreaseQuantityHandler = () => {
-    setBasket((prevBasket) =>
-      prevBasket
-        .map((item) => {
-          if (item.id === numberId) {
-            return { ...item, quantity: item.quantity - 1 };
-          }
-          return item;
-        })
-        .filter((item) => item.quantity >= 1),
-    );
-  };
+ 
   return (
     <main className="product-page">
       <h1 className="product-page-title">Explore this Product</h1>
@@ -114,7 +88,7 @@ export default function ProductDetailsPage() {
                       type="button"
                       className="product-details-quantity-button"
                       aria-label="Decrease quantity"
-                      onClick={decreaseQuantityHandler}
+                      onClick={() => dispatch(decreaseQuantity(numberId))}
                     >
                       −
                     </button>
@@ -127,7 +101,7 @@ export default function ProductDetailsPage() {
                       type="button"
                       className="product-details-quantity-button"
                       aria-label="Increase quantity"
-                      onClick={increaseQuantityHandler}
+                      onClick={() => dispatch(increaseQuantity(numberId))}
                     >
                       +
                     </button>
@@ -137,7 +111,9 @@ export default function ProductDetailsPage() {
                 <button
                   type="button"
                   className="product-details-basket-button"
-                  onClick={addToBasketHandler}
+                  onClick={() =>
+                    dispatch(addToBasket({...product,quantity:1}))
+                  }
                   disabled={product.stock === 0}
                 >
                   Add to Basket
