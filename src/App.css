@@ -1,0 +1,21 @@
+main {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+main h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+main p {
+  color: #667085;
+}
+
+@media (max-width: 600px) {
+  main {
+    margin: 24px auto;
+    padding: 0 20px;
+  }
+}

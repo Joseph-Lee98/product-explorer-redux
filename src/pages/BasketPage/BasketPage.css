@@ -1,0 +1,50 @@
+.basket-page {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.basket-page-title {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.basket-page-description {
+  color: #667085;
+  margin-bottom: 30px;
+}
+
+.basket-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.basket-empty {
+  color: #b42318;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .basket-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Small tablet */
+@media (max-width: 700px) {
+  .basket-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 450px) {
+  .basket-grid {
+    grid-template-columns: 1fr;
+  }
+}
